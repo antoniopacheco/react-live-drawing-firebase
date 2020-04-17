@@ -1,6 +1,6 @@
 {
   "name": "react-live-drawing-firebase",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "drawinig canvas save it to firebase",
   "main": "lib/index.js",
   "scripts": {

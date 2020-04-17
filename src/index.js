@@ -34,7 +34,7 @@ export const ReactLiveDrawing = forwardRef((props, ref) => {
   );
 });
 
-export const LiveViewer = ({ props, db, immediate = false }) => {
+export const LiveViewer = ({ db, immediate = false, ...props }) => {
   let canvasRef = useRef(null);
   const draws = useState(null);
   let simulating = false;
@@ -89,6 +89,7 @@ export const LiveViewer = ({ props, db, immediate = false }) => {
     <CanvasDraw
       ref={(canvasDraw) => (canvasRef = canvasDraw)}
       disabled
+      {...props}
     ></CanvasDraw>
   );
 };
