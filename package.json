@@ -1,6 +1,6 @@
 {
   "name": "react-live-drawing-firebase",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "drawinig canvas save it to firebase",
   "main": "lib/index.js",
   "scripts": {
@@ -45,6 +45,6 @@
     "react": "16.x"
   },
   "dependencies": {
-    "react-canvas-draw": "file:../react-canvas-draw"
+    "react-canvas-draw": "^1.1.0"
   }
 }
