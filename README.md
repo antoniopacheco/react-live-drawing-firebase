@@ -13,8 +13,13 @@ npm install --save react-live-drawing-firebase
 Person drawing:
 
 ```jsx
-import {ReactLiveDrawing} from 'react-live-drawing-firebase'
-<ReactLiveDrawing db={fireBase.ref('draws') {...props}}>
+import { ReactLiveDrawing } from "react-live-drawing-firebase";
+
+<ReactLiveDrawing
+  ref={(canvasDraw) => (drawingRef = canvasDraw)}
+  db={fire.database().ref("draw-room")}
+  {...props}
+/>;
 ```
 
 Person viewing:
@@ -29,3 +34,15 @@ import {LiveViewer} from 'react-live-drawing-firebase'
 - db firebase ref
 - all other react-canvas-draw props
   https://github.com/embiem/react-canvas-draw#props
+
+## Functions
+
+functions are only available on ReactLiveDrawing
+
+### clear
+
+This function will clear the canvas, delete lines from firebase and will cause an update on the viewer
+
+```jsx
+canvasDraw.clear();
+```

@@ -1,12 +1,27 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import CanvasDraw from "react-canvas-draw";
 
-export const ReactLiveDrawing = ({ props, db }) => {
+export const ReactLiveDrawing = forwardRef((props, ref) => {
+  const { db } = props;
   let canvasRef = useRef(null);
   const saveCanvas = () => {
     const data = canvasRef.getSaveData();
     db.set(JSON.parse(data));
   };
+
+  useImperativeHandle(ref, () => ({
+    clear() {
+      canvasRef.clear();
+      console.log(db.child("lines"));
+      db.child("lines").remove();
+    },
+  }));
 
   return (
     <CanvasDraw
@@ -17,7 +32,7 @@ export const ReactLiveDrawing = ({ props, db }) => {
       {...props}
     />
   );
-};
+});
 
 export const LiveViewer = ({ props, db, immediate = false }) => {
   let canvasRef = useRef(null);
@@ -26,6 +41,10 @@ export const LiveViewer = ({ props, db, immediate = false }) => {
   let drawImmediate = immediate;
 
   useEffect(() => {
+    db.on("child_removed", () => {
+      canvasRef.clear();
+    });
+
     db.child("lines").on("child_added", (snap) => {
       const line = snap.val();
       const { points, brushColor, brushRadius } = line;
