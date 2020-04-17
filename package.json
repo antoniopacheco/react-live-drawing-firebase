@@ -1,0 +1,50 @@
+{
+  "name": "react-live-drawing-firebase",
+  "version": "1.0.1",
+  "description": "drawinig canvas save it to firebase",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest --config jestconfig.json",
+    "format": "prettier --write \"src/**/*.js\"",
+    "build": "babel src --out-dir lib",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test",
+    "prepublish": "babel src --out-dir lib",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoniopacheco/react-live-drawing-firebase.git"
+  },
+  "author": "Antonio Pacheco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antoniopacheco/react-live-drawing-firebase/issues"
+  },
+  "homepage": "https://github.com/antoniopacheco/react-live-drawing-firebase#readme",
+  "files": [
+    "lib/**/*"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "react": "^16.13.1"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "dependencies": {
+    "react-canvas-draw": "file:../react-canvas-draw"
+  }
+}
