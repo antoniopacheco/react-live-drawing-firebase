@@ -18,7 +18,6 @@ export const ReactLiveDrawing = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     clear() {
       canvasRef.clear();
-      console.log(db.child("lines"));
       db.child("lines").remove();
     },
   }));
@@ -36,7 +35,6 @@ export const ReactLiveDrawing = forwardRef((props, ref) => {
 
 export const LiveViewer = ({ db, immediate = false, ...props }) => {
   let canvasRef = useRef(null);
-  const draws = useState(null);
   let simulating = false;
   let drawImmediate = immediate;
 
@@ -82,6 +80,24 @@ export const LiveViewer = ({ db, immediate = false, ...props }) => {
         canvasRef.saveLine({ brushColor, brushRadius });
         simulating = false;
       }, curTime);
+    });
+  }, []);
+
+  return (
+    <CanvasDraw
+      ref={(canvasDraw) => (canvasRef = canvasDraw)}
+      disabled
+      {...props}
+    ></CanvasDraw>
+  );
+};
+
+export const RecorderViewer = ({ db, immediate = false, ...props }) => {
+  let canvasRef = useRef(null);
+  useEffect(() => {
+    db.once("value", (snap) => {
+      const draws = snap.val();
+      canvasRef.loadSaveData(JSON.stringify(draws), immediate);
     });
   }, []);
 

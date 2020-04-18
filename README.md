@@ -22,11 +22,20 @@ import { ReactLiveDrawing } from "react-live-drawing-firebase";
 />;
 ```
 
-Person viewing:
+Person viewing
+
+### Live view
 
 ```jsx
 import {LiveViewer} from 'react-live-drawing-firebase'
-<LiveViewer db={fireBase.ref('draws') {...props}}>
+<LiveViewer db={fireBase.ref('draws') {...props}} />
+```
+
+### Recorder view
+
+```jsx
+import { RecorderViewer } from "react-live-drawing-firebase";
+<RecorderViewer db={firebase.href("draw")} {...props} />;
 ```
 
 ## props
