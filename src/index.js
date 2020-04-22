@@ -1,14 +1,13 @@
 import React, {
   useRef,
   useEffect,
-  useState,
   forwardRef,
   useImperativeHandle,
 } from "react";
 import CanvasDraw from "react-canvas-draw";
 
 export const ReactLiveDrawing = forwardRef((props, ref) => {
-  const { db } = props;
+  const { db, ...restOfProps } = props;
   let canvasRef = useRef(null);
   const saveCanvas = () => {
     const data = canvasRef.getSaveData();
@@ -28,7 +27,7 @@ export const ReactLiveDrawing = forwardRef((props, ref) => {
         saveCanvas();
       }}
       ref={(canvasDraw) => (canvasRef = canvasDraw)}
-      {...props}
+      {...restOfProps}
     />
   );
 });
