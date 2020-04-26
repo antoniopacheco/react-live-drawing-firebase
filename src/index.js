@@ -38,11 +38,11 @@ export const LiveViewer = ({ db, immediate = false, ...props }) => {
   let drawImmediate = immediate;
 
   useEffect(() => {
-    db.on("child_removed", () => {
+    const unsubscribe_child = db.on("child_removed", () => {
       canvasRef.clear();
     });
 
-    db.child("lines").on("child_added", (snap) => {
+    const unsubscribe_lines = db.child("lines").on("child_added", (snap) => {
       const line = snap.val();
       const { points, brushColor, brushRadius } = line;
       let curTime = 0;
@@ -80,6 +80,10 @@ export const LiveViewer = ({ db, immediate = false, ...props }) => {
         simulating = false;
       }, curTime);
     });
+    return () => {
+      unsubscribe_child();
+      unsubscribe_lines();
+    };
   }, []);
 
   return (
@@ -94,10 +98,13 @@ export const LiveViewer = ({ db, immediate = false, ...props }) => {
 export const RecorderViewer = ({ db, immediate = false, ...props }) => {
   let canvasRef = useRef(null);
   useEffect(() => {
-    db.once("value", (snap) => {
+    const unsubscribe = db.once("value", (snap) => {
       const draws = snap.val();
       canvasRef.loadSaveData(JSON.stringify(draws), immediate);
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return (
